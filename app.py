@@ -9,12 +9,13 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("012345")
 
 BASE_DIR = Path(__file__).resolve().parent
-DATABASE = BASE_DIR / "assignments.db"
-
+DB_PATH = Path(
+    os.environ.get("DATABASE_PATH", str(Path(__file__).resolve().parent / "assignments.db"))
+)
 
 # Connect to the SQLite database
 def get_db_connection():
-    connection = sqlite3.connect(DATABASE)
+    connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
     return connection
 
